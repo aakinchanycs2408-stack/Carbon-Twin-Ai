@@ -500,9 +500,29 @@ export default function SimulatorPage() {
             {/* Activate all CTA */}
             {!anyActive && (
               <motion.button
-                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }}
                 onClick={() => setActives(Object.fromEntries(SIMS.map(s => [s.id, true])))}
-                style={{ padding: '12px', borderRadius: 12, background: 'linear-gradient(135deg, rgba(16,185,129,0.1), rgba(99,102,241,0.08))', border: '1px dashed rgba(16,185,129,0.3)', color: '#34d399', fontSize: 13, fontWeight: 700, cursor: 'pointer', textAlign: 'center' }}>
+                style={{
+                  padding: '14px', borderRadius: 12,
+                  background: 'linear-gradient(135deg, rgba(16,185,129,0.15), rgba(99,102,241,0.1))',
+                  border: '1px solid rgba(16,185,129,0.35)',
+                  color: '#34d399', fontSize: 13, fontWeight: 800, cursor: 'pointer',
+                  textAlign: 'center', letterSpacing: '0.02em',
+                  boxShadow: '0 0 24px rgba(16,185,129,0.12)',
+                  position: 'relative', overflow: 'hidden',
+                }}
+              >
+                <motion.span
+                  animate={{ x: ['-100%', '200%'] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: 'linear', repeatDelay: 1.5 }}
+                  style={{
+                    position: 'absolute', inset: 0,
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)',
+                  }}
+                />
                 ⚡ Activate All Changes
               </motion.button>
             )}

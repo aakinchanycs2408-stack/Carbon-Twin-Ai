@@ -75,7 +75,12 @@ function parseGeminiResponse(text: string): MessagePart[] {
 
 // ─── Suggested prompts ────────────────────────────────────────────────────────
 const SUGGESTED: { icon: React.ElementType; text: string; color: string }[] = [
-
+  { icon: TrendingDown, text: 'How can I reduce my carbon footprint today?', color: '#10b981' },
+  { icon: Car, text: 'Which habits are hurting my eco score the most?', color: '#6366f1' },
+  { icon: Zap, text: 'Should I switch to renewable energy?', color: '#f59e0b' },
+  { icon: UtensilsCrossed, text: 'How does my diet affect my carbon score?', color: '#ec4899' },
+  { icon: TreePine, text: 'Create a 30-day green action plan for me', color: '#34d399' },
+  { icon: BarChart2, text: 'How does my score compare globally?', color: '#a855f7' },
 ]
 
 // ─── Mock response matcher ───────────────────────────────────────────────────────
@@ -263,7 +268,16 @@ function ChatMessage({ msg, isLatest }: { msg: Message; isLatest: boolean }) {
         </div>
 
         {/* Message bubble */}
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '4px 18px 18px 18px', padding: '16px 18px', backdropFilter: 'blur(12px)' }}>
+        <div style={{
+          background: 'rgba(16,185,129,0.04)',
+          border: '1px solid rgba(16,185,129,0.14)',
+          borderLeft: '3px solid rgba(16,185,129,0.5)',
+          borderRadius: '4px 18px 18px 18px',
+          padding: '16px 18px',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+        }}>
           <MessageContent
             parts={msg.content}
             charCount={isLatest ? charCount : totalChars}
@@ -294,15 +308,22 @@ function ChatMessage({ msg, isLatest }: { msg: Message; isLatest: boolean }) {
 function TypingIndicator() {
   return (
     <div style={{ display: 'flex', gap: 12, marginBottom: 24, alignItems: 'flex-start' }}>
-      <div style={{ width: 36, height: 36, borderRadius: 11, background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-        <Leaf size={16} color="#10b981" />
+      <div style={{ position: 'relative', flexShrink: 0 }}>
+        <motion.div
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 1.8, repeat: Infinity }}
+          style={{ position: 'absolute', inset: -4, borderRadius: 15, border: '1px solid rgba(16,185,129,0.4)' }}
+        />
+        <div style={{ width: 36, height: 36, borderRadius: 11, background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 12px rgba(16,185,129,0.2)' }}>
+          <Leaf size={16} color="#10b981" />
+        </div>
       </div>
       <div style={{ paddingTop: 8 }}>
-        <p style={{ fontSize: 12, color: '#10b981', fontWeight: 600, margin: '0 0 8px' }}>Eco Coach</p>
-        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '4px 18px 18px 18px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 5 }}>
+        <p style={{ fontSize: 12, color: '#10b981', fontWeight: 700, margin: '0 0 8px' }}>Eco Coach <span style={{ fontSize: 10, opacity: 0.6 }}>is typing…</span></p>
+        <div style={{ background: 'rgba(16,185,129,0.04)', border: '1px solid rgba(16,185,129,0.14)', borderLeft: '3px solid rgba(16,185,129,0.4)', borderRadius: '4px 18px 18px 18px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 6 }}>
           {[0, 1, 2].map(i => (
-            <motion.div key={i} animate={{ y: [0, -5, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
-              style={{ width: 7, height: 7, borderRadius: '50%', background: '#10b981', opacity: 0.7 }} />
+            <motion.div key={i} animate={{ y: [0, -5, 0], opacity: [0.5, 1, 0.5] }} transition={{ duration: 0.65, repeat: Infinity, delay: i * 0.18 }}
+              style={{ width: 7, height: 7, borderRadius: '50%', background: '#10b981' }} />
           ))}
         </div>
       </div>

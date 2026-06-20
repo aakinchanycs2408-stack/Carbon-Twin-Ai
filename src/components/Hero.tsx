@@ -262,14 +262,17 @@ export default function Hero() {
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
               padding: '14px 32px', borderRadius: 14,
-              background: '#10b981', color: '#000',
-              fontWeight: 800, fontSize: 15, textDecoration: 'none',
-              boxShadow: '0 0 0 rgba(16,185,129,0)',
-              transition: 'box-shadow 0.3s',
-              letterSpacing: '-0.01em',
+              background: 'linear-gradient(135deg, #10b981, #0ea472)',
+              color: '#000', fontWeight: 800, fontSize: 15, textDecoration: 'none',
+              boxShadow: '0 0 32px rgba(16,185,129,0.45), 0 4px 20px rgba(0,0,0,0.3)',
+              letterSpacing: '-0.01em', position: 'relative', overflow: 'hidden',
             }}
-            onMouseEnter={e => (e.currentTarget as HTMLElement).style.boxShadow = '0 0 36px rgba(16,185,129,0.5), 0 8px 24px rgba(0,0,0,0.3)'}
-            onMouseLeave={e => (e.currentTarget as HTMLElement).style.boxShadow = '0 0 0 rgba(16,185,129,0)'}>
+          >
+            <span style={{
+              position: 'absolute', inset: 0,
+              background: 'linear-gradient(180deg, rgba(255,255,255,0.18) 0%, transparent 60%)',
+              borderRadius: 'inherit',
+            }} />
             Start Free Assessment
             <ArrowRight size={17} />
           </motion.a>
@@ -294,17 +297,20 @@ export default function Hero() {
         </motion.div>
 
         {/* Social proof */}
-        <motion.div variants={item} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 20, marginBottom: 64, flexWrap: 'wrap' }}>
+        <motion.div variants={item} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0, marginBottom: 64, flexWrap: 'wrap' }}>
           {[
-            { icon: Users,       text: '20,847 members'  },
-            { icon: TrendingDown,text: '142t CO₂ saved'   },
-            { icon: Award,       text: '4.9★ rating'      },
+            { icon: Users,        text: '20,847 members', color: '#10b981' },
+            { icon: TrendingDown, text: '142t CO₂ saved',  color: '#34d399' },
+            { icon: Award,        text: '4.9★ rating',     color: '#f59e0b' },
           ].map((s, i) => {
             const Icon = s.icon
             return (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#52525b' }}>
-                <Icon size={13} color="#10b981" />
-                <span>{s.text}</span>
+              <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
+                {i > 0 && <div style={{ width: 1, height: 14, background: 'rgba(255,255,255,0.1)', margin: '0 16px' }} />}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#52525b' }}>
+                  <Icon size={13} color={s.color} />
+                  <span style={{ fontWeight: 600 }}>{s.text}</span>
+                </div>
               </div>
             )
           })}
@@ -346,7 +352,7 @@ export default function Hero() {
           </FloatingBadge>
 
           {/* Glow beneath mockup */}
-          <div style={{ position: 'absolute', bottom: -40, left: '50%', transform: 'translateX(-50%)', width: 500, height: 100, background: 'radial-gradient(ellipse, rgba(16,185,129,0.12) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', bottom: -50, left: '50%', transform: 'translateX(-50%)', width: 600, height: 140, background: 'radial-gradient(ellipse, rgba(16,185,129,0.18) 0%, transparent 70%)', pointerEvents: 'none', filter: 'blur(8px)' }} />
         </div>
       </motion.div>
 

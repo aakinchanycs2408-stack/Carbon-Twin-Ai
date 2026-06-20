@@ -218,19 +218,26 @@ export default function AssessmentPage() {
         <span style={{ fontSize: 13, color: '#52525b', fontWeight: 500 }}>Step {step + 1} of {total}</span>
       </header>
 
-      {/* Progress bar */}
+      {/* Progress indicator */}
       <div style={{ position: 'relative', zIndex: 10, maxWidth: 720, margin: '0 auto', width: '100%', padding: '0 24px' }}>
-        <div style={{ height: 4, borderRadius: 99, background: 'rgba(255,255,255,0.06)', overflow: 'hidden' }}>
-          <motion.div
-            animate={{ width: `${progress + (100 / total)}%` }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-            style={{ height: '100%', background: 'linear-gradient(90deg, #059669, #34d399)', borderRadius: 99 }}
-          />
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-          {STEPS.map((s, i) => (
-            <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: i <= step ? '#10b981' : 'rgba(255,255,255,0.1)', transition: 'background 0.3s' }} />
+        {/* Segment bar */}
+        <div style={{ display: 'flex', gap: 4, marginBottom: 10 }}>
+          {STEPS.map((_, i) => (
+            <motion.div
+              key={i}
+              animate={{
+                background: i < step ? '#059669' : i === step ? '#34d399' : 'rgba(255,255,255,0.07)',
+                boxShadow: i === step ? '0 0 10px rgba(52,211,153,0.6)' : 'none',
+              }}
+              transition={{ duration: 0.35 }}
+              style={{ flex: 1, height: 3, borderRadius: 99 }}
+            />
           ))}
+        </div>
+        {/* Step labels */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span style={{ fontSize: 11, color: '#10b981', fontWeight: 700 }}>{current.emoji} {current.title}</span>
+          <span style={{ fontSize: 11, color: '#3f3f46', fontWeight: 600 }}>{step + 1}/{total}</span>
         </div>
       </div>
 
@@ -248,12 +255,18 @@ export default function AssessmentPage() {
             >
               {/* Step card */}
               <div style={{
-                background: 'rgba(255,255,255,0.03)',
+                background: 'rgba(10,20,15,0.7)',
                 border: '1px solid rgba(255,255,255,0.1)',
                 borderRadius: 24,
                 padding: 40,
-                backdropFilter: 'blur(20px)',
+                backdropFilter: 'blur(24px)',
+                WebkitBackdropFilter: 'blur(24px)',
+                position: 'relative',
+                overflow: 'hidden',
+                boxShadow: '0 24px 64px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)',
               }}>
+                {/* Top gradient border accent */}
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1.5, background: 'linear-gradient(to right, transparent, rgba(52,211,153,0.5), transparent)' }} />
                 {/* Step header */}
                 <div style={{ marginBottom: 32 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
@@ -459,13 +472,16 @@ export default function AssessmentPage() {
       {/* Slider thumb styles */}
       <style>{`
         input[type=range]::-webkit-slider-thumb {
-          appearance: none; width: 22px; height: 22px; border-radius: 50%;
-          background: #10b981; border: 3px solid #050f0a;
-          box-shadow: 0 0 12px rgba(16,185,129,0.5); cursor: pointer;
+          -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%;
+          background: linear-gradient(135deg, #34d399, #10b981); border: 2.5px solid #050f0a;
+          box-shadow: 0 0 16px rgba(16,185,129,0.6), 0 2px 8px rgba(0,0,0,0.4); cursor: pointer;
+          transition: transform 0.15s ease;
         }
+        input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
         input[type=range]::-moz-range-thumb {
           width: 22px; height: 22px; border-radius: 50%;
-          background: #10b981; border: 3px solid #050f0a; cursor: pointer;
+          background: #10b981; border: 2.5px solid #050f0a;
+          box-shadow: 0 0 12px rgba(16,185,129,0.5); cursor: pointer;
         }
         @media(max-width:600px){
           div[style*="repeat(2,1fr)"]{ grid-template-columns: 1fr !important; }
